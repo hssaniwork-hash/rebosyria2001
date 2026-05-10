@@ -260,8 +260,7 @@ textarea{
     }
 
    #im{
-    width: 50px;
-    height: 50px;
+    display: none;
    }
 
     .btn{
@@ -457,7 +456,7 @@ textarea{
             <th>المراجعة</th>
             <th>الانسحاب</th>
             <th>ملاحظات</th>
-           
+            <th>ادوات</th>
         </thead>
         <tbody>
           
@@ -477,6 +476,7 @@ textarea{
             <th>التقييم التشغيلي </th>
             <th>الحالة</th>
             <th>ملاحظات</th>
+            <th>ادوات</th>
         </thead>
         <tbody>
           
@@ -629,26 +629,25 @@ function downloadExceltb2() {
     XLSX.writeFile(workbook, filename);
 }
 
-function addRowEm(){
+function addRowEm() {
 
     // جلب القيم
-
     let empart = document.getElementById("em-1").value; // اسم القسم
     let name = document.getElementById("name").value; // اسم الموظف
     let countre = document.getElementById("count-re").value; // عدد الاستمارات
     let counterror = document.getElementById("counterror").value; // عدد الاخطاء
     let level1 = document.getElementById('in-2').value; // التقييم السلوكي
     let level2 = document.getElementById('in-1').value; // التقييم التشغيلي
-    let statues = document.getElementById('statues').value; // التقييم السلوكي
-    let note = document.getElementById('note').value; // التقييم التشغيلي
+    let statues = document.getElementById('statues').value; // الحالة
+    let note = document.getElementById('note').value; // الملاحظات
+
     // جلب الجدول
     let table = document.getElementById("tb-1");
-    // إنشاء صف جديد
 
+    // إنشاء صف جديد
     let row = table.insertRow();
 
     // إنشاء الخلايا
-
     let cell1 = row.insertCell(0);
     let cell2 = row.insertCell(1);
     let cell3 = row.insertCell(2);
@@ -657,11 +656,9 @@ function addRowEm(){
     let cell6 = row.insertCell(5);
     let cell7 = row.insertCell(6);
     let cell8 = row.insertCell(7);
-
-
+    let cell9 = row.insertCell(8);
 
     // وضع البيانات داخل الخلايا
-
     cell1.innerHTML = empart;
     cell2.innerHTML = name;
     cell3.innerHTML = countre;
@@ -670,60 +667,128 @@ function addRowEm(){
     cell6.innerHTML = level2;
     cell7.innerHTML = statues;
     cell8.innerHTML = note;
-    // تنظيف الحقول
-    empart="";
-    name="";
-    countre="";
-    counterror="";
-    level1="";
-    level2="";
-    statues="";
-    note="";
+
+    // أزرار التعديل والحذف
+    cell9.innerHTML = `
+        <button onclick="editRowEm(this)">تعديل</button>
+        <button onclick="deleteRowEm(this)">حذف</button>
+    `;
+
+    // تفريغ الحقول بعد الإضافة
+    document.getElementById("em-1").value = "";
+    document.getElementById("name").value = "";
+    document.getElementById("count-re").value = "";
+    document.getElementById("counterror").value = "";
+    document.getElementById("in-2").value = "";
+    document.getElementById("in-1").value = "";
+    document.getElementById("statues").value = "";
+    document.getElementById("note").value = "";
 }
 
 
-function addRowRE(){
+function editRowEm(btn) {
+
+    // الوصول إلى الصف الحالي
+    let row = btn.parentNode.parentNode;
+
+    // تعبئة الحقول بالبيانات الحالية
+    document.getElementById("em-1").value = row.cells[0].innerHTML;
+    document.getElementById("name").value = row.cells[1].innerHTML;
+    document.getElementById("count-re").value = row.cells[2].innerHTML;
+    document.getElementById("counterror").value = row.cells[3].innerHTML;
+    document.getElementById("in-2").value = row.cells[4].innerHTML;
+    document.getElementById("in-1").value = row.cells[5].innerHTML;
+    document.getElementById("statues").value = row.cells[6].innerHTML;
+    document.getElementById("note").value = row.cells[7].innerHTML;
+
+    // حذف الصف القديم لتعديله ثم إعادة إضافته
+    row.remove();
+}
+
+
+function deleteRowEm(btn) {
+
+    // الوصول إلى الصف الحالي
+    let row = btn.parentNode.parentNode;
+
+    // حذف الصف
+    row.remove();
+}
+
+
+function addRowRE() {
 
     // جلب القيم
-
     let part = document.getElementById("em-8").value; // اسم القسم
     let accept = document.getElementById("accept").value; // عدد القبول
     let blok = document.getElementById("blok").value; // عدد الرفض
-    let out = document.getElementById('out').value; //  عدد الانسحاب
+    let out = document.getElementById('out').value; // عدد الانسحاب
     let req = document.getElementById('req').value; // المراجعة
-    let note1 = document.getElementById('note1').value; // ملاحظات 
+    let note1 = document.getElementById('note1').value; // ملاحظات
+
     // جلب الجدول
     let tx = document.getElementById("tb-2");
-    // إنشاء صف جديد
 
+    // إنشاء صف جديد
     let row = tx.insertRow();
 
     // إنشاء الخلايا
-
     let cell1 = row.insertCell(0);
     let cell2 = row.insertCell(1);
     let cell3 = row.insertCell(2);
     let cell4 = row.insertCell(3);
     let cell5 = row.insertCell(4);
     let cell6 = row.insertCell(5);
-  
-
-
+    let cell7 = row.insertCell(6);
 
     // وضع البيانات داخل الخلايا
-
     cell1.innerHTML = part;
     cell2.innerHTML = accept;
     cell3.innerHTML = blok;
     cell4.innerHTML = out;
     cell5.innerHTML = note1;
     cell6.innerHTML = req;
-  
-    // تنظيف الحقول
-  
-    
+
+    // أزرار التعديل والحذف
+    cell7.innerHTML = `
+        <button onclick="editRowRE(this)">تعديل</button>
+        <button onclick="deleteRowRE(this)">حذف</button>
+    `;
+
+    // تفريغ الحقول بعد الإضافة
+    document.getElementById("em-8").value = "";
+    document.getElementById("accept").value = "";
+    document.getElementById("blok").value = "";
+    document.getElementById("out").value = "";
+    document.getElementById("req").value = "";
+    document.getElementById("note1").value = "";
 }
 
+function editRowRE(btn) {
+
+    // الوصول إلى الصف الحالي
+    let row = btn.parentNode.parentNode;
+
+    // تعبئة الحقول بالقيم الحالية
+    document.getElementById("em-8").value = row.cells[0].innerHTML;
+    document.getElementById("accept").value = row.cells[1].innerHTML;
+    document.getElementById("blok").value = row.cells[2].innerHTML;
+    document.getElementById("out").value = row.cells[3].innerHTML;
+    document.getElementById("note1").value = row.cells[4].innerHTML;
+    document.getElementById("req").value = row.cells[5].innerHTML;
+
+    // حذف الصف القديم لإعادة تعديله
+    row.remove();
+}
+
+function deleteRowRE(btn) {
+
+    // الوصول إلى الصف الحالي
+    let row = btn.parentNode.parentNode;
+
+    // حذف الصف
+    row.remove();
+}
 
 
 
