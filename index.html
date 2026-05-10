@@ -86,7 +86,7 @@ to{
 }
 }
 #im{
-    width: 120px;
+    width: 90px;
     height: 90px;
     position: absolute;
     left: 40px;
@@ -245,8 +245,12 @@ textarea{
 }
 
 /* للجوال */
-
-@media(max-width:768px){
+@media(max-width:300px){
+    #im{
+       display: none;
+    }
+}
+@media(max-width:700px){
 
     .continer{
         grid-template-columns:1fr;
@@ -255,10 +259,13 @@ textarea{
         overflow-y: auto;
     }
 
-   
+   #im{
+    width: 50px;
+    height: 50px;
+   }
 
     .btn{
-        width:100%;
+        width:fit-content;
         display: flex;
     }
 
@@ -281,8 +288,9 @@ textarea{
     outline: none;
 }
 .btns{
-    display: flex;
+    display: grid;
     gap: 10px;
+    grid-template-columns: 1fr;
     font-size: 14px;
     width: fit-content;
 }
@@ -504,9 +512,7 @@ textarea{
 
 <!-- زر التحميل -->
  <div class="btns">
-<button class="btn" onclick="">
-  اضافة بيانات التقرير
-</button>
+
 <button class="btn" onclick="addRowEm()" style="background: rgb(223, 174, 15);">
   اضافة بيانات موظف
 </button>
